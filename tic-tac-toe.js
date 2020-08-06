@@ -1,19 +1,10 @@
 window.addEventListener("DOMContentLoaded", () => {
   let currentPlayerSymbol = "x";
   let gameStatus = "";
-  let squareValues = [
-    "",
-    "",
-    "", // 0, 1, 2          //2, 4, 6       0, 3, 6
-    "",
-    "",
-    "", // 3, 4, 5          // 0, 4, 8      1, 4, 7
-    "",
-    "",
-    "",
-  ]; //6, 7, 8                           2, 5, 8
-
+  let squareValues = ["","","", "","","","","",""];                       
+  let newButton = document.getElementById("new-game-button");
   const board = document.getElementById("tic-tac-toe-board");
+  let gameHeader = document.getElementById("game-status");
 
   function checkGameStatus() {
     // Check rows
@@ -61,7 +52,9 @@ window.addEventListener("DOMContentLoaded", () => {
       gameStatus = "Nobody :(";
     }
     if (gameStatus !== "") {
-      document.getElementById("game-status").innerHTML = `${gameStatus.toUpperCase()} wins!`;
+      gameHeader.innerHTML = `${gameStatus.toUpperCase()} wins!`;
+      
+      newButton.removeAttribute("disabled")
     }
   }
 
@@ -87,10 +80,24 @@ window.addEventListener("DOMContentLoaded", () => {
         currentPlayerSymbol = "x";
       }
       checkGameStatus();
-      //   let gameStatusHeading = document.getElementById("game-status")
-      //     gameStatusHeading.innerHTML(checkGameStatus())
+
     }
   });
+  newButton.addEventListener("click", (event) => {
+      currentPlayerSymbol = "x";
+      squareValues = ["", "", "", "", "", "", "", "", ""];
+      gameStatus = "";
+     gameHeader.innerHTML = "";
+     for (i = 0; i < 9; i++) {
+         document
+         .getElementById(`square-${i}`)
+         .innerHTML = ''
+     }
+     document 
+     .getElementById("new-game-button")
+     .setAttribute("disabled", true);
+     
+  })
 });
 
 // function checkGameStatus() {
