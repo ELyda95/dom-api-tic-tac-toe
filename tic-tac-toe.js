@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", () => {
   let gameStatus = "";
   let squareValues = ["","","", "","","","","",""];                       
   let newButton = document.getElementById("new-game-button");
+  let giveUpButton = document.getElementById("give-up-button");
   const board = document.getElementById("tic-tac-toe-board");
   let gameHeader = document.getElementById("game-status");
 
@@ -54,7 +55,8 @@ window.addEventListener("DOMContentLoaded", () => {
     if (gameStatus !== "") {
       gameHeader.innerHTML = `${gameStatus.toUpperCase()} wins!`;
       
-      newButton.removeAttribute("disabled")
+      newButton.removeAttribute("disabled");
+      giveUpButton.setAttribute("disabled", true);
     }
   }
 
@@ -98,37 +100,14 @@ window.addEventListener("DOMContentLoaded", () => {
      .setAttribute("disabled", true);
      
   })
+    giveUpButton.addEventListener("click", (event) => {
+        if (currentPlayerSymbol === "x"){
+            gameStatus = "o"
+            gameHeader.innerHTML = `${gameStatus.toUpperCase()} wins!`;
+        } else {
+            gameStatus = "x"
+            gameHeader.innerHTML = `${gameStatus.toUpperCase()} wins!`
+        }
+        newButton.removeAttribute("disabled");
+    })
 });
-
-// function checkGameStatus() {
-//     for (let i = 0; i < squareValues.length; i++) {
-//         if ((squareValues[0] !== "" && squareValues[0] === squareValues[1]) && (squareValues[2] === squareValues[0])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else if ((squareValues[3] === squareValues[4]) && (squareValues[5] === squareValues[3])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else if ((squareValues[6] === squareValues[7]) && (squareValues[8] === squareValues[6])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else if ((squareValues[2] === squareValues[4]) && (squareValues[6] === squareValues[2])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else if ((squareValues[0] === squareValues[4]) && (squareValues[8] === squareValues[0])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else if ((squareValues[0] === squareValues[3]) && (squareValues[6] === squareValues[0])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else if ((squareValues[1] === squareValues[4]) && (squareValues[7] === squareValues[1])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else if ((squareValues[2] === squareValues[5]) && (squareValues[8] === squareValues[2])) {
-//             console.log(`${currentPlayerSymbol} is the winner!`)
-//         }
-//         else {
-//             console.log("Nobody wins!")
-//         }
-
-//     }
-// }
