@@ -1,11 +1,56 @@
 window.addEventListener("DOMContentLoaded", () => {
+    
   let currentPlayerSymbol = "x";
   let gameStatus = "";
-  let squareValues = ["","","", "","","","","",""];                       
+  let squareValues = ["","","", "","","","","",""];     
+  const key = "tic-tac-toe-player"
+  const gameStatusKey = "tic-tac-toe-status" 
+  const squareValuesKey = "tic-tac-toe-values"
+  
   let newButton = document.getElementById("new-game-button");
   let giveUpButton = document.getElementById("give-up-button");
   const board = document.getElementById("tic-tac-toe-board");
   let gameHeader = document.getElementById("game-status");
+
+  loadGame();
+
+ 
+
+  function saveGame() {
+      const object = {
+          currentPlayerSymbol,
+          gameStatus,
+          squareValues,
+      }
+      localStorage.setItem(key, JSON.stringify(object))
+ }
+    
+ 
+  function loadGame() {
+      const idk = localStorage.getItem(key)
+      const idk1 = JSON.parse(idk);
+      console.log(Object.values(idk1));
+      [player, status, squareVals] = Object.values(idk1)
+      squareValues = squareVals;
+      currentPlayerSymbol = player
+      gameStatus = status;
+    console.log(player)
+    console.log(status)
+    console.log(squareVals)
+
+      if (localStorage.playerKey){
+     currentPlayerSymbol = JSON.parse(localStorage.getItem(playerKey));
+      console.log(currentPlayerSymbol)
+
+      }
+      if(localStorage.gameStatusKey) {
+    gameStatus = JSON.parse(localStorage.getItem(gameStatusKey));
+      }
+      if (localStorage.squareValuesKey){
+    squareValues = JSON.parse(localStorage.getItem(squareValuesKey))
+  }
+}
+
 
   function checkGameStatus() {
     // Check rows
@@ -43,6 +88,8 @@ window.addEventListener("DOMContentLoaded", () => {
       gameStatus = squareValues[2];
     }
 
+      saveGame();
+
     let isDraw = true;
     for (let i = 0; i < 9; i++) {
       if (squareValues[i] === "") {
@@ -54,10 +101,12 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     if (gameStatus !== "") {
       gameHeader.innerHTML = `${gameStatus.toUpperCase()} wins!`;
-      
       newButton.removeAttribute("disabled");
       giveUpButton.setAttribute("disabled", true);
+          
+      
     }
+      saveGame();
   }
 
   //
@@ -110,4 +159,6 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         newButton.removeAttribute("disabled");
     })
+
+ 
 });
