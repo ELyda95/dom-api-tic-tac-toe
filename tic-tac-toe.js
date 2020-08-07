@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   loadGame();
 
+  
  
 
   function saveGame() {
@@ -27,28 +28,29 @@ window.addEventListener("DOMContentLoaded", () => {
     
  
   function loadGame() {
+    if (localStorage.getItem(key) !== null){
       const idk = localStorage.getItem(key)
       const idk1 = JSON.parse(idk);
-      console.log(Object.values(idk1));
       [player, status, squareVals] = Object.values(idk1)
+    
       squareValues = squareVals;
       currentPlayerSymbol = player
       gameStatus = status;
-    console.log(player)
-    console.log(status)
-    console.log(squareVals)
-
-      if (localStorage.playerKey){
-     currentPlayerSymbol = JSON.parse(localStorage.getItem(playerKey));
-      console.log(currentPlayerSymbol)
+    
+    for (let i = 0; i < squareValues.length; i++){
+      let squareValue = squareValues[i]
+      if (squareValue !== ""){
+         const img = document.createElement("img");
+         img.setAttribute("class", "prof-img");
+         img.src = `player-${squareValue}.svg`;
+         let correspondingSquare = document.getElementById(`square-${i}`)
+        correspondingSquare.appendChild(img);
 
       }
-      if(localStorage.gameStatusKey) {
-    gameStatus = JSON.parse(localStorage.getItem(gameStatusKey));
-      }
-      if (localStorage.squareValuesKey){
-    squareValues = JSON.parse(localStorage.getItem(squareValuesKey))
-  }
+    }
+    }
+   checkGameStatus();
+
 }
 
 
@@ -102,7 +104,7 @@ window.addEventListener("DOMContentLoaded", () => {
     if (gameStatus !== "") {
       gameHeader.innerHTML = `${gameStatus.toUpperCase()} wins!`;
       newButton.removeAttribute("disabled");
-      giveUpButton.setAttribute("disabled", true);
+      giveUpButton.removeAttribute("disabled");
           
       
     }
@@ -111,6 +113,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //
   board.addEventListener("click", (event) => {
+    if (gameStatus !== "") return;
     let startsWith = "square-";
     if (event.target.id.includes(startsWith)) {
       let squareId = event.target.id;
@@ -131,7 +134,7 @@ window.addEventListener("DOMContentLoaded", () => {
         currentPlayerSymbol = "x";
       }
       checkGameStatus();
-
+      // turnCounter();
     }
   });
   newButton.addEventListener("click", (event) => {
@@ -147,6 +150,11 @@ window.addEventListener("DOMContentLoaded", () => {
      document 
      .getElementById("new-game-button")
      .setAttribute("disabled", true);
+
+     giveUpButton.removeAttribute("disabled")
+
+    
+     saveGame();
      
   })
     giveUpButton.addEventListener("click", (event) => {
@@ -158,7 +166,30 @@ window.addEventListener("DOMContentLoaded", () => {
             gameHeader.innerHTML = `${gameStatus.toUpperCase()} wins!`
         }
         newButton.removeAttribute("disabled");
+        giveUpButton.setAttribute("disabled", true)
     })
 
  
-});
+    function nightmareMode(){
+
+      //If computer starts as x, then human is o
+      //If human starts as x, then computer is o
+      // if it is computer's turn, generate a random number between 0 - 9
+      //find an empty spot and add either the x or the o to the board
+
+
+    }
+
+//     function turnCounter(){
+//       let count = 0; 
+//       for (let i = 0; i < squareValues.length; i++) {
+//         if (squareValues[i] !== ""){
+//           count++;
+//           console.log(count)
+//         }
+//       }
+            
+
+//     }
+
+ });
